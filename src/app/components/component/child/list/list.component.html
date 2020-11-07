@@ -1,4 +1,7 @@
 <div>
+    <a mat-raised-button class="mb-3" color="primary" style="float: right;" routerLink="/component/new">
+        <mat-icon aria-label="Side nav toggle icon">add_circle</mat-icon> New Component
+    </a>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -10,13 +13,13 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let country of countries; index as i">
+            <tr *ngFor="let cmpt of cmpts; index as i">
                 <th scope="row">{{ i + 1 }}</th>
                 <td>
-                    {{ country.name }}
+                    {{ cmpt.name }}
                 </td>
-                <td>{{ country.amountLeft | number }}</td>
-                <td>{{ country.dealer }}</td>
+                <td>{{ cmpt.quantityLeft | number }}</td>
+                <td>{{ cmpt.dealer }}</td>
                 <td>
                     <button mat-mini-fab color="primary"> <mat-icon aria-label="Side nav toggle icon">create</mat-icon></button>
                 </td>

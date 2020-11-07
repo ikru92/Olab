@@ -1,33 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpService } from '../../../../services/http.service'
 
-interface Country {
-  name: string;
-  amountLeft: number;
-  dealer: string;
+interface IComponent {
+  id: string,
+  name: string,
+  quantityUsed: string
 }
 
-const COUNTRIES: Country[] = [
-  {
-    name: 'Iron',
-    amountLeft: 17075200,
-    dealer: 'NN Chemicals'
-  },
-  {
-    name: 'Copper',
-    amountLeft: 9976140,
-    dealer: 'MN Chemicals'
-  },
-  {
-    name: 'Sodium',
-    amountLeft: 9629091,
-    dealer: 'PN Chemicals'
-  },
-  {
-    name: 'Zinc',
-    amountLeft: 9596960,
-    dealer: 'SN Chemicals'
-  }
-];
+interface IExperiment {
+  id: string,
+  startDate: string,
+  name: string,
+  componentUsed: IComponent[],
+  procedure: string
+}
 
 @Component({
   selector: 'app-list',
@@ -36,5 +22,21 @@ const COUNTRIES: Country[] = [
 })
 
 export class ListComponent {
-  countries = COUNTRIES;
+  tmplts: IExperiment
+
+  constructor(public httpSvc: HttpService) { }
+  ngOnInit(): void {
+    this.getComponents();
+  }
+  getComponents(): void {
+    this.httpSvc.getAll('template')
+      .subscribe(
+        data => {
+          this.tmplts = data;
+          console.log(data);
+        },
+        error => {
+          console.log(error);
+        });
+  }
 }
