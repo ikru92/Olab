@@ -1,0 +1,21 @@
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
+        <mat-toolbar><span><img width="50" height="50" src="/assets/logo.png">Lab</span></mat-toolbar>
+        <mat-nav-list class="mat-list-content">
+            <a mat-list-item href="/component">
+                <mat-icon aria-label="Side nav toggle icon">extension </mat-icon>Components</a>
+            <a mat-list-item href="/experiment">
+                <mat-icon aria-label="Side nav toggle icon">science</mat-icon> Experiments</a>
+            <a mat-list-item href="/template">
+                <mat-icon aria-label="Side nav toggle icon">line_style</mat-icon>Experiment Templates</a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <mat-toolbar class="navbar">
+            <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+              <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+            </button>
+        </mat-toolbar>
+        <ng-content></ng-content>
+    </mat-sidenav-content>
+</mat-sidenav-container>
