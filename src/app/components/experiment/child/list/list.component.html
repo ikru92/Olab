@@ -14,6 +14,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Experiment</th>
                 <th scope="col">Start Date</th>
+                <th scope="col">Materials</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
@@ -24,6 +25,11 @@
                     {{ expt.name }}
                 </td>
                 <td>{{ expt.startDate | date }}</td>
+                <td>
+                    <ng-container *ngFor="let cmpt of expt.componentUsed">
+                        <li>{{cmpt.name}}</li>
+                    </ng-container>
+                </td>
                 <td>
                     <button mat-mini-fab color="primary" (click)="removeExperiment(i, expt.id)"> 
                         <mat-icon aria-label="Side nav toggle icon">delete</mat-icon>

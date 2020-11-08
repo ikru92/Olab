@@ -19,9 +19,9 @@
         </button>
             <div formArrayName="componentUsed" *ngFor="let num of experimentForm.get('componentUsed')['controls'];let i=index ">
                 <div class="input-group mb-1" [formGroupName]="i">
-                    <select required class="form-control col-md-6" name="id " formControlName="id">
+                    <select required class="form-control col-md-6" name="id" formControlName="id" (change)="updateComponentName($event,i)">
                     <option value="" selected disabled hidden>Choose here</option>
-                    <option *ngFor="let cmpt of cmpts " [value]="cmpt.id ">{{cmpt.name}}</option>
+                    <option *ngFor="let cmpt of cmpts " [value]="cmpt.id">{{cmpt.name}}</option>
                 </select>
                     <input type="number" name="input" class="form-control col-md-3 mx-2 " placeholder="Quanity" formControlName="quantityUsed" required />
                     <button mat-mini-fab class="mx-2" *ngIf="experimentForm.get('componentUsed')['length']>1" (click)="removeWidget(i)" color="primary">

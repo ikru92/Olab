@@ -6,9 +6,7 @@ import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 
 interface IComponent {
     id: string,
-    name: string,
-    quantityLeft: number,
-    dealer: string
+    names: string,
 }
 
 @Component({
@@ -17,9 +15,9 @@ interface IComponent {
     styleUrls: ['./new.component.css']
 })
 export class NewComponent implements OnInit {
-    cmpts: IComponent;
+    cmpts: IComponent[];
     successFlag = false;
-    experiment;
+    names: string[] = [];
 
     experimentForm = this.fb.group({
         name: [''],
@@ -51,6 +49,7 @@ export class NewComponent implements OnInit {
     addFormgroup(): FormGroup {
         return this.fb.group({
             id: [''],
+            name: [''],
             quantityUsed: [0]
         });
     }
@@ -61,9 +60,16 @@ export class NewComponent implements OnInit {
         (<FormArray>this.experimentForm.get('componentUsed')).removeAt(indexToRemove);
     }
 
+    updateComponentName(event, i): void {
+        let name = event.target.options[event.target.options.selectedIndex].text;
+        this.names[i] = name;
+    }
+
     saveExperiment(): void {
         this.experimentForm.value.startDate = this.ngbDateParserFormatter.format(this.experimentForm.value.startDate);
-        console.log(this.experimentForm.value);
+        for (let i = 0; i < this.names.length; i++) {
+            this.experimentForm.value.componentUsed[i].name = this.names[i];
+        }
         this.httpSvc.create("experiment", this.experimentForm.value)
             .subscribe(
                 response => {
@@ -75,6 +81,7 @@ export class NewComponent implements OnInit {
                         componentUsed: this.fb.array([
                             this.fb.group({
                                 id: [''],
+                                name: [''],
                                 quantityUsed: [0]
                             })
                         ])
