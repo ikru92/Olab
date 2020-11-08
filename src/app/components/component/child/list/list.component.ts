@@ -15,7 +15,7 @@ interface IComponent {
 })
 
 export class ListComponent {
-  cmpts: IComponent
+  cmpts: IComponent[]
 
   constructor(public httpSvc: HttpService) { }
   ngOnInit(): void {
@@ -26,6 +26,16 @@ export class ListComponent {
       .subscribe(
         data => {
           this.cmpts = data;
+        },
+        error => {
+          console.log(error);
+        });
+  }
+  removeComponent(i, id): void {
+    this.httpSvc.delete('component', id)
+      .subscribe(
+        data => {
+          this.cmpts.splice(i, 1);
         },
         error => {
           console.log(error);

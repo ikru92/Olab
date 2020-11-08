@@ -2,6 +2,12 @@
     <a mat-raised-button class="mb-3" color="primary" style="float: right;" routerLink="/experiment/new">
         <mat-icon aria-label="Side nav toggle icon">add_circle</mat-icon> New Experiment
     </a>
+    <ngb-toast *ngIf="successFlag" class="toast">
+        Deleted experiment
+    </ngb-toast>
+    <ngb-toast *ngIf="errorFlag" class="toast">
+        Error while deleting!! Please try again
+    </ngb-toast>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -19,7 +25,9 @@
                 </td>
                 <td>{{ expt.startDate | date }}</td>
                 <td>
-                    <button mat-mini-fab color="primary"> <mat-icon aria-label="Side nav toggle icon">create</mat-icon></button>
+                    <button mat-mini-fab color="primary" (click)="removeExperiment(i, expt.id)"> 
+                        <mat-icon aria-label="Side nav toggle icon">delete</mat-icon>
+                    </button>
                 </td>
             </tr>
         </tbody>

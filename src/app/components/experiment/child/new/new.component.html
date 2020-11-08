@@ -1,37 +1,48 @@
-<form>
-    <div class="form-group">
-        <label for="Name">Name</label>
-        <input type="text" class="form-control" id="nameInput" aria-describedby="nameHelp">
-    </div>
-    <div class="form-group">
-        <label for="Procedure">Procedure</label>
-        <input type="textarea" class="form-control" id="procedureInput" aria-describedby="procedureHelp">
-    </div>
-    <div class="form-group">
-        <label for="Material">Material</label>
-        <div class="input-group">
-            <select required class="form-control">
-                <option label="--select material --"></option>
-                <option value="saab">Saab</option>
-                <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
-            </select>
-            <input type="number" class="form-control mx-3" placeholder="Quanity">
-            <button mat-mini-fab color="primary"><mat-icon>remove_circle</mat-icon></button>
+<div>
+    <ngb-toast *ngIf="successFlag" class="toast">
+        Added experiment successfully
+    </ngb-toast>
+    <form [formGroup]="experimentForm">
+        <div class="form-group ">
+            <label for="Name ">Name</label>
+            <input type="text " class="form-control " formControlName="name" />
         </div>
-    </div>
-    <div class="form-group">
-        <label for="Date">Date</label>
-        <div class="input-group">
-            <input class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker" />
-            <div class="input-group-append">
-                <button class="btn-outline-secondary" (click)="d.toggle()" type="button"> 
+        <div class="form-group ">
+            <label for="Procedure ">Procedure</label>
+            <input type="textarea " class="form-control " formControlName="procedure" />
+        </div>
+
+        <div class="form-group ">
+            <label class="col-md-12">Material</label>
+            <button class="btn-sm btn-warning mb-2" (click)="addWidget() ">
+            Add Materials
+        </button>
+            <div formArrayName="componentUsed" *ngFor="let num of experimentForm.get('componentUsed')['controls'];let i=index ">
+                <div class="input-group mb-1" [formGroupName]="i">
+                    <select required class="form-control col-md-6" name="id " formControlName="id">
+                    <option value="" selected disabled hidden>Choose here</option>
+                    <option *ngFor="let cmpt of cmpts " [value]="cmpt.id ">{{cmpt.name}}</option>
+                </select>
+                    <input type="number" name="input" class="form-control col-md-3 mx-2 " placeholder="Quanity" formControlName="quantityUsed" required />
+                    <button mat-mini-fab class="mx-2" *ngIf="experimentForm.get('componentUsed')['length']>1" (click)="removeWidget(i)" color="primary">
+                    <mat-icon>delete</mat-icon>
+                </button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Date">Date</label>
+            <div class="input-group">
+                <input class="form-control col-md-5" placeholder="yyyy-mm-dd" formControlName="startDate" ngbDatepicker #d="ngbDatepicker" />
+                <div class="input-group-append">
+                    <button class="btn-outline-secondary" (click)="d.toggle()" type="button"> 
                     <mat-icon>
                         date_range 
                     </mat-icon>
                 </button>
+                </div>
             </div>
         </div>
-    </div>
-    <button type="submit" class="btn btn-primary">Add New</button>
-</form>
+        <button type="submit" (click)="saveExperiment()" class="btn btn-primary">Add New</button>
+    </form>
+</div>

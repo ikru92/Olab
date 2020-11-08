@@ -22,7 +22,9 @@ interface IExperiment {
 })
 
 export class ListComponent {
-  expts: IExperiment
+  expts: IExperiment[]
+  successFlag = false;
+  errorFlag = false;
 
   constructor(public httpSvc: HttpService) { }
   ngOnInit(): void {
@@ -37,6 +39,23 @@ export class ListComponent {
         },
         error => {
           console.log(error);
+        });
+  }
+  removeExperiment(i, id): void {
+    this.httpSvc.delete('experiment', id)
+      .subscribe(
+        data => {
+          this.expts.splice(i, 1);
+          this.successFlag = true;
+          setTimeout(() => {
+            this.successFlag = false;
+          }, 3000);
+        },
+        error => {
+          this.errorFlag = true;
+          setTimeout(() => {
+            this.errorFlag = false;
+          }, 3000);
         });
   }
 }

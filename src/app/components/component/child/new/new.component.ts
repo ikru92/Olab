@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../../../services/http.service'
 
+
 @Component({
   selector: 'app-new',
   templateUrl: './new.component.html',

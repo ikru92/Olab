@@ -20,8 +20,11 @@
                 </td>
                 <td>{{ cmpt.quantityLeft | number }}</td>
                 <td>{{ cmpt.dealer }}</td>
+
                 <td>
-                    <button mat-mini-fab color="primary"> <mat-icon aria-label="Side nav toggle icon">create</mat-icon></button>
+                    <button mat-mini-fab color="primary" (click)="removeComponent(i, cmpt.id)"> 
+                        <mat-icon aria-label="Side nav toggle icon">delete</mat-icon>
+                    </button>
                 </td>
             </tr>
         </tbody>
